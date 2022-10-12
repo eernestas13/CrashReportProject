@@ -27,7 +27,6 @@ class CrashReportController {
                 3 -> list()
                 4 -> search()
                 5 -> delete()
-                -99 -> dummyData()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
@@ -54,6 +53,8 @@ class CrashReportController {
     fun menu() :Int { return crashView.menu() }
 
     fun add(){
+        println("here")
+
         var aCrashReport = CrashReportModel()
 
         if (crashView.addCrashReportData(aCrashReport))
@@ -96,9 +97,4 @@ class CrashReportController {
         return foundCrashReport
     }
 
-    fun dummyData() {
-        crashReports.create(CrashReportModel(title = "New York New York", description = "So Good They Named It Twice"))
-        crashReports.create(CrashReportModel(title= "Ring of Kerry", description = "Some place in the Kingdom"))
-        crashReports.create(CrashReportModel(title = "Waterford City", description = "You get great Blaas Here!!"))
-    }
 }

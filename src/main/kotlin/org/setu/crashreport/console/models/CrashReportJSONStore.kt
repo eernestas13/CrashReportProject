@@ -9,6 +9,7 @@ import org.setu.crashreport.console.helpers.read
 import org.setu.crashreport.console.helpers.write
 
 import org.setu.crashreport.console.helpers.*
+import org.setu.crashreport.console.main.crashReports
 import java.util.*
 
 private val logger = KotlinLogging.logger {}
@@ -20,6 +21,11 @@ val listType = object : TypeToken<java.util.ArrayList<CrashReportModel>>() {}.ty
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
+
+fun increment(crashReport: CrashReportModel): Long {
+    return crashReport.id.inc()
+}
+
 
 class CrashReportJSONStore : CrashReportStore {
 
@@ -42,6 +48,12 @@ class CrashReportJSONStore : CrashReportStore {
 
     override fun create(crashReport: CrashReportModel) {
         crashReport.id = generateRandomId()
+       // crashReport.id = crashReport.id.plus(1)
+
+        //crashReport.id = crashReport.id++
+//        when (crashReport.id) {
+//            is Long -> crashReport.id++
+//        }
         crashReports.add(crashReport)
         serialize()
     }
@@ -49,6 +61,8 @@ class CrashReportJSONStore : CrashReportStore {
     override fun update(crashReport: CrashReportModel) {
         var foundCrashReport = findOne(crashReport.id!!)
         if (foundCrashReport != null) {
+            foundCrashReport.road = crashReport.road
+       //     foundCrashReport.delay = crashReport.delay
             foundCrashReport.title = crashReport.title
             foundCrashReport.description = crashReport.description
         }

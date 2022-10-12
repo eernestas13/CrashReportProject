@@ -1,3 +1,3 @@
 
-rootProject.name = "placemark-console"
+rootProject.name = "CrashReportProject"
 
