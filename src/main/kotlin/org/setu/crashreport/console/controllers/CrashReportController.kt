@@ -27,12 +27,22 @@ class CrashReportController {
                 3 -> list()
                 4 -> search()
                 5 -> delete()
+                6 -> filter()
+                7 -> searchroad()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
             println()
         } while (input != -1)
         logger.info { "Shutting Down Crash Report Console App" }
+    }
+
+    fun filter() {
+        println("Enter to filter")
+        crashView.listCrashReports(crashReports)
+        var searchRoad = crashView.getRoad()
+        val aCrashReport = searchroad(searchRoad)
+
     }
 
     fun delete() {
@@ -94,6 +104,18 @@ class CrashReportController {
 
     fun search(id: Long) : CrashReportModel? {
         var foundCrashReport = crashReports.findOne(id)
+        return foundCrashReport
+    }
+
+    fun searchroad() {
+        crashView.listCrashReports(crashReports)
+        val aCrashReport = searchroad(crashView.getRoad())!!
+        crashView.showCrashReport(aCrashReport)
+    }
+
+
+    fun searchroad(road: String) : CrashReportModel? {
+        var foundCrashReport = crashReports.findOneRoad(road)
         return foundCrashReport
     }
 

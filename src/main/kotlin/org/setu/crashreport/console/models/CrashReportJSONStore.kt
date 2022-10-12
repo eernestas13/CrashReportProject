@@ -11,6 +11,7 @@ import org.setu.crashreport.console.helpers.write
 import org.setu.crashreport.console.helpers.*
 import org.setu.crashreport.console.main.crashReports
 import java.util.*
+import kotlin.collections.HashSet
 
 private val logger = KotlinLogging.logger {}
 
@@ -31,6 +32,7 @@ class CrashReportJSONStore : CrashReportStore {
 
     var crashReports = mutableListOf<CrashReportModel>()
 
+
     init {
         if (exists(JSON_FILE)) {
             deserialize()
@@ -41,8 +43,13 @@ class CrashReportJSONStore : CrashReportStore {
         return crashReports
     }
 
+
     override fun findOne(id: Long) : CrashReportModel? {
         var foundCrashReport: CrashReportModel? = crashReports.find { p -> p.id == id }
+        return foundCrashReport
+    }
+    override fun findOneRoad(road: String) : CrashReportModel? {
+        var foundCrashReport: CrashReportModel? = crashReports.find { p -> p.road == road }
         return foundCrashReport
     }
 

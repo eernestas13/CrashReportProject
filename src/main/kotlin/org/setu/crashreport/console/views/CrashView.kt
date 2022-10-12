@@ -12,16 +12,16 @@ import tornadofx.*
 //        }
 //    }
 //}
-
-
-
+//
+//
+//
 
 
 class CrashView {
 
-    fun menu() : Int {
+    fun menu(): Int {
 
-        var option : Int
+        var option: Int
         var input: String?
 
         println("MAIN MENU")
@@ -30,6 +30,8 @@ class CrashView {
         println(" 3. List All Crash Report")
         println(" 4. Search Crash Report")
         println(" 5. Delete Crash Report")
+        println(" 6. Filter")
+        println(" 7. Search Road Report")
         println("-1. Exit")
         println()
         print("Enter Option : ")
@@ -48,15 +50,14 @@ class CrashView {
         println()
     }
 
-    fun showCrashReport(crashReport : CrashReportModel) {
-        if(crashReport != null)
+    fun showCrashReport(crashReport: CrashReportModel) {
+        if (crashReport != null)
             println("Crash Report Details [ $crashReport ]")
         else
             println("Crash Report Not Found...")
     }
 
-    fun addCrashReportData(crashReport : CrashReportModel) : Boolean {
-
+    fun addCrashReportData(crashReport: CrashReportModel): Boolean {
 
 
         println()
@@ -70,21 +71,22 @@ class CrashView {
         print("Enter a Description : ")
         crashReport.description = readLine()!!
 
-        return crashReport.road.isNotEmpty() && crashReport.delay.toString().isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
+        return crashReport.road.isNotEmpty() && crashReport.delay.toString()
+            .isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
     }
 
-    fun updateCrashReportData(crashReport : CrashReportModel) : Boolean {
+    fun updateCrashReportData(crashReport: CrashReportModel): Boolean {
 
         val tempRoad: String?
-       // val tempDelay: Int?
+        // val tempDelay: Int?
         val tempTitle: String?
         val tempDescription: String?
 
         if (crashReport != null) {
             print("Enter a new Road for [ " + crashReport.road + " ] : ")
             tempRoad = readLine()!!
-          //  print("Enter an average Delay for [ " + crashReport.delay + " ] : ")
-          //  tempDelay = readLine()!!.toIntOrNull()
+            //  print("Enter an average Delay for [ " + crashReport.delay + " ] : ")
+            //  tempDelay = readLine()!!.toIntOrNull()
             print("Enter a new Title for [ " + crashReport.title + " ] : ")
             tempTitle = readLine()!!
             print("Enter a new Description for [ " + crashReport.description + " ] : ")
@@ -92,7 +94,7 @@ class CrashView {
 
             if (!tempRoad.isNullOrEmpty() && /*!tempDelay.toString().isNullOrEmpty() && */!tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
                 crashReport.road = tempRoad
-           //     crashReport.delay = tempDelay
+                //     crashReport.delay = tempDelay
                 crashReport.title = tempTitle
                 crashReport.description = tempDescription
                 return true
@@ -101,15 +103,28 @@ class CrashView {
         return false
     }
 
-    fun getId() : Long {
-        var strId : String? // String to hold user input
-        var searchId : Long // Long to hold converted id
-        print("Enter id to Search/Update : ")
+    fun getId(): Long {
+        var strId: String? // String to hold user input
+        var searchId: Long // Long to hold converted id
+        print("Enter ID : ")
         strId = readLine()!!
         searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
             strId.toLong()
         else
             -9
         return searchId
+    }
+
+    fun getRoad(): String {
+        var strRoad: String?
+        var searchRoad: String
+
+        print("Enter Road (exact) : ")
+        strRoad = readLine()!!
+        searchRoad = if (strRoad != null && strRoad.isNotEmpty())
+            strRoad.toString()
+        else
+            println("Invalid").toString()
+        return searchRoad
     }
 }
