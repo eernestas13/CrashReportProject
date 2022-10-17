@@ -70,7 +70,6 @@ class CrashReportJSONStore : CrashReportStore {
         var foundCrashReport = findOne(crashReport.id!!)
         if (foundCrashReport != null) {
             foundCrashReport.road = crashReport.road
-            foundCrashReport.delay = crashReport.delay
             foundCrashReport.title = crashReport.title
             foundCrashReport.description = crashReport.description
         }

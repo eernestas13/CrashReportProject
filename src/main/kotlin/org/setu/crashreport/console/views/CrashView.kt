@@ -83,47 +83,30 @@ class CrashView {
         println()
         print("Enter a Road : ")
         crashReport.road = readLine()!!
-        print("Enter an average Delay (mins) : ")
-        try {
-            crashReport.delay = readLine()!!.toIntOrNull()!!
-        }catch (e:NullPointerException){
-            print("Please enter a numeric value for average Delay (mins) : ")
-            crashReport.delay = readLine()!!.toIntOrNull()!!
-        }
         print("Enter a Title : ")
         crashReport.title = readLine()!!
         print("Enter a Description : ")
         crashReport.description = readLine()!!
 
-        return crashReport.road.isNotEmpty() && crashReport.delay.toString()
-            .isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
+        return crashReport.road.isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
     }
 
     fun updateCrashReportData(crashReport: CrashReportModel): Boolean {
 
         val tempRoad: String?
-        var tempDelay: Int
         val tempTitle: String?
         val tempDescription: String?
 
         if (crashReport != null) {
             print("Enter a new Road for [ " + crashReport.road + " ] : ")
             tempRoad = readLine()!!
-            print("Enter a new average Delay for (mins) [ " + crashReport.delay + " ] : ")
-            try {
-                tempDelay = readLine()!!.toIntOrNull()!!
-            }catch (e:NullPointerException){
-                print("Please enter a numeric value for new average Delay (mins) : ")
-                tempDelay = readLine()!!.toIntOrNull()!!
-             }
             print("Enter a new Title for [ " + crashReport.title + " ] : ")
             tempTitle = readLine()!!
             print("Enter a new Description for [ " + crashReport.description + " ] : ")
             tempDescription = readLine()!!
 
-            if (!tempRoad.isNullOrEmpty() && !tempDelay.toString().isNullOrEmpty() && !tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
+            if (!tempRoad.isNullOrEmpty()  && !tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
                 crashReport.road = tempRoad
-                crashReport.delay = tempDelay
                 crashReport.title = tempTitle
                 crashReport.description = tempDescription
                 return true
