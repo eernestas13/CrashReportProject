@@ -12,7 +12,6 @@ class CrashReportController {
     val logger = KotlinLogging.logger {}
 
     init {
-        logger.info { "Launching Crash Report Console App" }
         println("Crash Report Kotlin App Version 3.0")
     }
 
@@ -34,7 +33,7 @@ class CrashReportController {
             }
             println()
         } while (input != -1)
-        logger.info { "Shutting Down Crash Report Console App" }
+        println("Shutting Down Crash Report Console App")
     }
 
     fun filter() {
@@ -70,7 +69,7 @@ class CrashReportController {
         if (crashView.addCrashReportData(aCrashReport))
             crashReports.create(aCrashReport)
         else
-            logger.info("Crash Report Not Added")
+            println("Crash Report Not Added")
     }
 
     fun list() {
@@ -87,10 +86,10 @@ class CrashReportController {
             if(crashView.updateCrashReportData(aCrashReport)) {
                 crashReports.update(aCrashReport)
                 crashView.showCrashReport(aCrashReport)
-                logger.info("Crash Report Updated : [ $aCrashReport ]")
+                println("Crash Report Updated : [ $aCrashReport ]")
             }
             else
-                logger.info("Crash Report Not Updated")
+                println("Crash Report Not Updated")
         }
         else
             println("Crash Report Not Updated...")

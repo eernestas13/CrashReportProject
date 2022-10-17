@@ -1,5 +1,4 @@
 package org.setu.crashreport.console.models
-//
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -8,10 +7,7 @@ import org.setu.crashreport.console.helpers.exists
 import org.setu.crashreport.console.helpers.read
 import org.setu.crashreport.console.helpers.write
 
-import org.setu.crashreport.console.helpers.*
-import org.setu.crashreport.console.main.crashReports
 import java.util.*
-import kotlin.collections.HashSet
 
 private val logger = KotlinLogging.logger {}
 
@@ -21,6 +17,7 @@ val listType = object : TypeToken<java.util.ArrayList<CrashReportModel>>() {}.ty
 
 fun generateRandomId(): Long {
     return Random().nextLong()
+
 }
 
 fun increment(crashReport: CrashReportModel): Long {
@@ -55,6 +52,10 @@ class CrashReportJSONStore : CrashReportStore {
 
     override fun create(crashReport: CrashReportModel) {
         crashReport.id = generateRandomId()
+//        if (crashReport.id == crashReport.id) {
+//            crashReport.id++
+//        }
+
        // crashReport.id = crashReport.id.plus(1)
 
         //crashReport.id = crashReport.id++
@@ -69,7 +70,7 @@ class CrashReportJSONStore : CrashReportStore {
         var foundCrashReport = findOne(crashReport.id!!)
         if (foundCrashReport != null) {
             foundCrashReport.road = crashReport.road
-       //     foundCrashReport.delay = crashReport.delay
+            foundCrashReport.delay = crashReport.delay
             foundCrashReport.title = crashReport.title
             foundCrashReport.description = crashReport.description
         }
@@ -82,7 +83,7 @@ class CrashReportJSONStore : CrashReportStore {
     }
 
     internal fun logAll() {
-        crashReports.forEach { logger.info("${it}") }
+        crashReports.forEach { println("${it}") }
     }
 
     private fun serialize() {
