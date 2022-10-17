@@ -2,19 +2,18 @@ package org.setu.crashreport.console.views
 
 import org.setu.crashreport.console.models.CrashReportJSONStore
 import org.setu.crashreport.console.models.CrashReportModel
-
 import tornadofx.*
+import tornadofx.Stylesheet.Companion.label
+import javax.swing.text.View
 //
-//class CrashView : View("Crash Report") {
-//    override val root: HBox = hbox {
-//        label(title) {
-//            addClass(Styles.heading)
-//        }
+//class MainView : View("Admin Main Menu") {
+//    override val root = vbox(20) {
+//
 //    }
 //}
 //
-//
-//
+
+
 
 
 class CrashView {
@@ -78,23 +77,23 @@ class CrashView {
     fun updateCrashReportData(crashReport: CrashReportModel): Boolean {
 
         val tempRoad: String?
-        // val tempDelay: Int?
+        val tempDelay: Int
         val tempTitle: String?
         val tempDescription: String?
 
         if (crashReport != null) {
             print("Enter a new Road for [ " + crashReport.road + " ] : ")
             tempRoad = readLine()!!
-            //  print("Enter an average Delay for [ " + crashReport.delay + " ] : ")
-            //  tempDelay = readLine()!!.toIntOrNull()
+            print("Enter an average Delay for (mins) [ " + crashReport.delay + " ] : ")
+            tempDelay = readLine()!!.toIntOrNull()!!
             print("Enter a new Title for [ " + crashReport.title + " ] : ")
             tempTitle = readLine()!!
             print("Enter a new Description for [ " + crashReport.description + " ] : ")
             tempDescription = readLine()!!
 
-            if (!tempRoad.isNullOrEmpty() && /*!tempDelay.toString().isNullOrEmpty() && */!tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
+            if (!tempRoad.isNullOrEmpty() && !tempDelay.toString().isNullOrEmpty() && !tempTitle.isNullOrEmpty() && !tempDescription.isNullOrEmpty()) {
                 crashReport.road = tempRoad
-                //     crashReport.delay = tempDelay
+                crashReport.delay = tempDelay
                 crashReport.title = tempTitle
                 crashReport.description = tempDescription
                 return true
