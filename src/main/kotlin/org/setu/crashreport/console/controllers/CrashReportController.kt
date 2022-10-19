@@ -4,20 +4,21 @@ import mu.KotlinLogging
 import org.setu.crashreport.console.models.CrashReportJSONStore
 import org.setu.crashreport.console.models.CrashReportModel
 import org.setu.crashreport.console.views.CrashView
+import org.setu.crashreport.console.views.RESET
+import org.setu.crashreport.console.views.YELLOW
 
 class CrashReportController {
 
-    val crashReports = CrashReportJSONStore()
-    val crashView = CrashView()
-    val logger = KotlinLogging.logger {}
+    private val crashReports = CrashReportJSONStore()
+    private val crashView = CrashView()
 
     init {
-        println("Crash Report Kotlin App Version 3.0")
+        println("Crash Report Menu")
     }
 
     fun start() {
+        //Functions calls after User Inputs
         var input: Int
-
         do {
             input = menu()
             when (input) {
@@ -26,8 +27,7 @@ class CrashReportController {
                 3 -> list()
                 4 -> search()
                 5 -> delete()
-                6 -> filter()
-                7 -> searchroad()
+                6 -> searchroad()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
@@ -36,15 +36,9 @@ class CrashReportController {
         println("Shutting Down Crash Report Console App")
     }
 
-    fun filter() {
-        println("Enter to filter")
-        crashView.listCrashReports(crashReports)
-        var searchRoad = crashView.getRoad()
-        val aCrashReport = searchroad(searchRoad)
 
-    }
 
-    fun delete() {
+    private fun delete() {
         println("Enter Crash Report ID to Delete...")
         crashView.listCrashReports(crashReports)
         var searchId = crashView.getId()
@@ -59,11 +53,9 @@ class CrashReportController {
             println("Crash Report Not Deleted...")
     }
 
-    fun menu() :Int { return crashView.menu() }
+    private fun menu() :Int { return crashView.menu() }
 
-    fun add(){
-        println("here")
-
+    private fun add(){
         var aCrashReport = CrashReportModel()
 
         if (crashView.addCrashReportData(aCrashReport))
@@ -72,11 +64,11 @@ class CrashReportController {
             println("Crash Report Not Added")
     }
 
-    fun list() {
+    private fun list() {
         crashView.listCrashReports(crashReports)
     }
 
-    fun update() {
+    private fun update() {
 
         crashView.listCrashReports(crashReports)
         var searchId = crashView.getId()
@@ -95,27 +87,28 @@ class CrashReportController {
             println("Crash Report Not Updated...")
     }
 
-    fun search() {
+
+    private fun search() {
+        crashView.listCrashReports(crashReports)
         val aCrashReport = search(crashView.getId())!!
         crashView.showCrashReport(aCrashReport)
     }
 
 
-    fun search(id: Long) : CrashReportModel? {
-        var foundCrashReport = crashReports.findOne(id)
-        return foundCrashReport
+    private fun search(id: Long): CrashReportModel? {
+        return crashReports.findOne(id)
     }
 
-    fun searchroad() {
+    private fun searchroad() {
         crashView.listCrashReports(crashReports)
-        val aCrashReport = searchroad(crashView.getRoad())!!
-        crashView.showCrashReport(aCrashReport)
-    }
+        println("Enter Road to Filter by : ")
+        val userInput = readLine()!!
+        val foundRoad = crashReports.findAll().filter { it.road == userInput }
+        println("$YELLOW Roads Found : $RESET")
+        for (found in foundRoad){
+            println(found)
+        }
+       }
 
-
-    fun searchroad(road: String) : CrashReportModel? {
-        var foundCrashReport = crashReports.findOneRoad(road)
-        return foundCrashReport
-    }
 
 }

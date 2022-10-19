@@ -1,35 +1,31 @@
 package org.setu.crashreport.console.views
 
+import org.setu.crashreport.console.main.crashView
+import org.setu.crashreport.console.main.delayReports
 import org.setu.crashreport.console.models.CrashReportJSONStore
 import org.setu.crashreport.console.models.CrashReportModel
+import org.setu.crashreport.console.models.DelayReportJSONStore
+import kotlin.Boolean
+import kotlin.Int
+import kotlin.Long
+import kotlin.String
 
-//
-//class MainView : View("Admin Main Menu") {
-//    override val root = vbox(20) {
-//
-//    }
-//}
-//
+const val BLACK = "\u001b[0;30m" // BLACK
 
-    val BLACK = "\u001b[0;30m" // BLACK
+    const val RED = "\u001b[0;31m" // RED
 
-    val RED = "\u001b[0;31m" // RED
+    const val GREEN = "\u001b[0;32m" // GREEN
 
-    val GREEN = "\u001b[0;32m" // GREEN
+    const val YELLOW = "\u001b[0;33m" // YELLOW
 
-    val YELLOW = "\u001b[0;33m" // YELLOW
+    const val BLUE = "\u001b[0;34m" // BLUE
 
-    val BLUE = "\u001b[0;34m" // BLUE
-
-    val PURPLE = "\u001b[0;35m" // PURPLE
-
-    val CYAN = "\u001b[0;36m" // CYAN
-
-    val WHITE = "\u001b[0;37m" // WHITE
-
-    val RESET = "\u001B[0m" // RESet
+    const val RESET = "\u001B[0m" // RESet
 
     const val GREEN_BRIGHT = "\u001b[0;92m" // GREEN
+
+    val listDelayReports = DelayReportJSONStore()
+
 
 
 class CrashView {
@@ -38,19 +34,18 @@ class CrashView {
 
     fun menu(): Int {
 
+        //Displays Crash Menu Options to User
         var option: Int
         var input: String?
 
-       // println("MAIN MENU")
         println("----------------------------")
-        println(GREEN + "| 1. Add Crash Report      |" + RESET)
-        println(YELLOW + "| 2. Update Crash Report   |" + RESET)
+        println("$GREEN| 1. Add Crash Report      |$RESET")
+        println("$YELLOW| 2. Update Crash Report   |$RESET")
         println("| 3. List All Crash Report |")
-        println(BLUE + "| 4. Search Crash Report   |"+ RESET)
-        println(RED + "| 5. Delete Crash Report   |"+ RESET)
-        println("| 6. Filter |")
-        println(BLUE +"| 7. Search Road Report    |"+ RESET)
-        println(BLACK + "| -1. Exit |"+ RESET)
+        println("$BLUE| 4. Search Crash Report   |$RESET")
+        println("$RED| 5. Delete Crash Report   |$RESET")
+        println("| 6. Filter Crash Reports  |")
+        println("$BLACK| -1. Back to Main Menu    |$RESET")
         println("---------------------------")
 
         println()
@@ -63,13 +58,22 @@ class CrashView {
         return option
     }
 
+    //Lists All the Stored Crash Reports
     fun listCrashReports(crashReports: CrashReportJSONStore) {
-        println("List All Crash Reports")
+        println("List All Delay Reports")
         println()
         crashReports.logAll()
         println()
     }
+    //Lists All the Stored Delay Reports
+    private fun listDelayReports(delayReports: DelayReportJSONStore) {
+        println("List All Delay Reports")
+        println()
+        delayReports.logAll()
+        println()
+    }
 
+    //Lists All the Stored Crash Reports
     fun showCrashReport(crashReport: CrashReportModel) {
         if (crashReport != null)
             println("Crash Report Details [ $crashReport ]")
@@ -77,20 +81,39 @@ class CrashView {
             println("Crash Report Not Found...")
     }
 
+    //Adds a Crash Report through User Inputs
     fun addCrashReportData(crashReport: CrashReportModel): Boolean {
-
-
         println()
-        print("Enter a Road : ")
+        println("Enter a Road : ")
         crashReport.road = readLine()!!
-        print("Enter a Title : ")
+        println("Enter a Title : ")
         crashReport.title = readLine()!!
-        print("Enter a Description : ")
+        println("Enter a Description : ")
         crashReport.description = readLine()!!
+        println("Would you like to add a Delay Report?")
+        println("")
+        println("Enter 1 for Yes")
+        println("Enter 2 for No")
 
-        return crashReport.road.isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
+        var userinput = readLine()!!.toInt()
+        if (userinput == 1) {
+            //list all delay reports
+            crashView.listDelayReports(delayReports)
+            //user selects a delay report with id
+            //  val foundDelayReport = delayReports.findOneDelay(getId())!!
+            // val foundDelay = foundDelayReport.delay
+            //delay gets put into crash report
+            // crashReport.delay = foundDelayReport.delay
+            crashReport.delay = delayReports.findOneDelay(getId())!!
+        }
+        else if (userinput == 2) {
+            return crashReport.road.isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty()
+        }
+        return crashReport.road.isNotEmpty() && crashReport.title.isNotEmpty() && crashReport.description.isNotEmpty() && crashReport.delay.toString()
+            .isNotEmpty()
     }
 
+    //Updates a Crash Report through User Inputs
     fun updateCrashReportData(crashReport: CrashReportModel): Boolean {
 
         val tempRoad: String?
@@ -115,6 +138,7 @@ class CrashView {
         return false
     }
 
+    //Function to Get ID of a Crash Report
     fun getId(): Long {
         var strId: String? // String to hold user input
         var searchId: Long // Long to hold converted id
@@ -127,6 +151,7 @@ class CrashView {
         return searchId
     }
 
+    //Function to Get Road of a Crash Report
     fun getRoad(): String {
         var strRoad: String?
         var searchRoad: String
@@ -140,3 +165,5 @@ class CrashView {
         return searchRoad
     }
 }
+
+

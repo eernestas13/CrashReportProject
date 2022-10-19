@@ -13,7 +13,7 @@ fun write( fileName: String, data: String) {
         outputStreamWriter.write(data)
         outputStreamWriter.close()
     } catch (e: Exception) {
-        logger.error { "Cannot read file: " + e.toString() }
+        logger.error { "Cannot read file: $e" }
     }
 }
 
@@ -35,9 +35,9 @@ fun read(fileName: String): String {
             str = partialStr.toString()
         }
     } catch (e: FileNotFoundException) {
-        logger.error { "Cannot Find file: " + e.toString() }
+        logger.error { "Cannot Find file: $e" }
     } catch (e: IOException) {
-        logger.error { "Cannot Read file: " + e.toString() }
+        logger.error { "Cannot Read file: $e" }
     }
     return str
 }
