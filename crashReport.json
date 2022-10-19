@@ -1,0 +1,14 @@
+[
+  {
+    "id": -5309915552873146391,
+    "road": "M9",
+    "title": "Two car collision",
+    "delay": {
+      "id": -5998251414496684384,
+      "delay": 20,
+      "road": "M9",
+      "title": "Two car Collision"
+    },
+    "description": "No serious injuries, one car hit the rear of another"
+  }
+]
