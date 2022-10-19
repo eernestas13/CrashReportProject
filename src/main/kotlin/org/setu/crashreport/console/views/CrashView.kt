@@ -99,11 +99,6 @@ class CrashView {
         if (userinput == 1) {
             //list all delay reports
             crashView.listDelayReports(delayReports)
-            //user selects a delay report with id
-            //  val foundDelayReport = delayReports.findOneDelay(getId())!!
-            // val foundDelay = foundDelayReport.delay
-            //delay gets put into crash report
-            // crashReport.delay = foundDelayReport.delay
             crashReport.delay = delayReports.findOneDelay(getId())!!
         }
         else if (userinput == 2) {
